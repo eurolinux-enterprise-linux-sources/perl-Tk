@@ -1,0 +1,45 @@
+From ef70fd090dedebaa9fa6938d01655806fac2561a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Petr=20P=C3=ADsa=C5=99?= <ppisar@redhat.com>
+Date: Wed, 6 Nov 2013 14:15:34 +0100
+Subject: [PATCH] Preserve mode on pTk files
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Some pTk/*.[tm] files change mode during build. The result differs on
+differnt architectures and depends on external dependencies.
+
+This burderns regression tests and there is not reason why to change
+the mode. So this patch coerces all modes to 0644 making resulting
+debuginfo files uniform.
+
+Signed-off-by: Petr Písař <ppisar@redhat.com>
+---
+ pTk/mkVFunc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pTk/mkVFunc b/pTk/mkVFunc
+index e10a458..75194a2 100755
+--- a/pTk/mkVFunc
++++ b/pTk/mkVFunc
+@@ -19,7 +19,7 @@ sub openRO
+  my ($fh,$file) = @_;
+  if (-f $file && !-w $file)
+   {
+-   chmod(0666,$file) || warn "Cannot change permissions on $file:$!";
++   chmod(0644,$file) || warn "Cannot change permissions on $file:$!";
+   }
+  open($fh,">","$file~") || return 0;
+  push(@Files,$file);
+@@ -33,7 +33,7 @@ END
+     my $file = pop(@Files);
+     if (-f $file)
+      {
+-      chmod(0444,"$file~") || warn "Cannot change permissions on $file:$!";
++      chmod(0644,"$file~") || warn "Cannot change permissions on $file:$!";
+       if (!rename("$file~",$file))
+        {
+ 	warn "Cannot rename $file to $file~ ($!), trying again with deleting $file before...";
+-- 
+1.8.3.1
+
