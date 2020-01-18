@@ -4,7 +4,7 @@
 Name:           perl-Tk
 # devel version fix for perl 5.14: 
 Version:        804.030
-Release:        4%{?dist}
+Release:        6%{?dist}
 Summary:        Perl Graphical User Interface ToolKit
 
 Group:          Development/Libraries
@@ -125,6 +125,12 @@ find __demos/ -type f -exec chmod -x {} \;
 
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 804.030-6
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 804.030-5
+- Mass rebuild 2013-12-27
+
 * Wed Nov 06 2013 Petr Pisar <ppisar@redhat.com> - 804.030-4
 - Fix file modes changed while building (bug #1017322)
 - Correct change log entry date (bug #1017322)
